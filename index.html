@@ -9,12 +9,22 @@
 <div id="authScreen" class="auth-screen">
   <div class="auth-brand"><img src="icons/logo-promotor-pa.png" alt="Logo Promotor PA"><div><div class="brand-name">PROMOTOR <span>PA</span></div><div class="brand-subtitle">Organização, presença e resultados.</div></div></div>
   <form id="loginForm" class="auth-card">
-    <div class="eyebrow">ACESSO RESTRITO</div><h1>Bem-vindo!</h1><p>Entre com seu usuário para acessar o Promotor PA.</p>
+    <div class="eyebrow">ACESSO RESTRITO</div><h1 id="authTitle">Bem-vindo!</h1><p>Entre com seu usuário para acessar o Promotor PA.</p>
     <label>E-mail<input id="email" type="email" autocomplete="username" required placeholder="seu@email.com"></label>
     <label>Senha<input id="password" type="password" autocomplete="current-password" required placeholder="Sua senha"></label>
     <button class="primary wide" type="submit" id="loginButton">Entrar</button>
-    <button class="link-button" type="button" id="resetButton">Esqueci minha senha</button>
+    <button class="link-button" type="button" id="resetButton">Esqueci minha senha</button><button class="link-button" type="button" id="showRegister">Criar novo acesso</button>
     <p id="authMessage" class="message" role="status"></p>
+  </form>
+  <form id="registerForm" class="auth-card hidden">
+    <div class="eyebrow">NOVO CADASTRO</div><h1>Criar acesso</h1><p>Informe seus dados para vincular sua empresa aos produtos cadastrados.</p>
+    <label>Nome<input id="registerName" required maxlength="100" placeholder="Gabriel"></label>
+    <label>Empresa<input id="registerCompany" required maxlength="120" placeholder="Coca Cola"></label>
+    <label>E-mail<input id="registerEmail" type="email" required placeholder="gabriel@email.com"></label>
+    <label>Senha<input id="registerPassword" type="password" minlength="6" required placeholder="Mínimo de 6 caracteres"></label>
+    <label>Confirmar senha<input id="registerConfirm" type="password" minlength="6" required placeholder="Repita sua senha"></label>
+    <button class="primary wide" type="submit" id="registerButton">Cadastrar</button>
+    <button class="link-button" type="button" id="showLogin">Já tenho acesso</button>
   </form>
 </div>
 <div id="appShell" class="hidden">

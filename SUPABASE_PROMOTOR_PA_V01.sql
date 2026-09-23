@@ -71,3 +71,14 @@ drop policy if exists "promotor photo public read" on storage.objects;
 drop policy if exists "promotor photo own upload" on storage.objects;
 create policy "promotor photo public read" on storage.objects for select using (bucket_id = 'promotor-product-photos');
 create policy "promotor photo own upload" on storage.objects for insert with check (bucket_id = 'promotor-product-photos' and (storage.foldername(name))[1] = auth.uid()::text);
+
+-- V05: Realtime compartilhado entre Promotor PA e Vencimento PA.
+do $$
+begin
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname='supabase_realtime' and schemaname='public' and tablename='promotor_products'
+  ) then
+    alter publication supabase_realtime add table public.promotor_products;
+  end if;
+end $$;

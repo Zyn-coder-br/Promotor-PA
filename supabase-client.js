@@ -19,7 +19,7 @@ window.PromotorSupabase={
  async resetPassword(email){const c=await getClient();const r=await c.auth.resetPasswordForEmail(email,{redirectTo:location.href});if(r.error)throw r.error;return r.data;},
  async session(){const c=await getClient();const r=await c.auth.getSession();if(r.error)throw r.error;return r.data.session;},
  async signOut(){const c=await getClient();const r=await c.auth.signOut();if(r.error)throw r.error;},
- async listProducts(){const c=await getClient();const r=await c.from('promotor_products').select('*').order('created_at',{ascending:false});if(r.error)throw r.error;return r.data||[];},
+ async listProducts(){const c=await getClient();const user=(await c.auth.getUser()).data.user;if(!user)throw new Error('Usuário não autenticado.');const r=await c.from('promotor_products').select('*').eq('user_id',user.id).order('created_at',{ascending:false});if(r.error)throw r.error;return r.data||[];},
  async addProduct(payload){const c=await getClient();const r=await c.from('promotor_products').insert(payload).select().single();if(r.error)throw r.error;return r.data;},
  async deleteProducts(ids){const c=await getClient();const r=await c.from('promotor_products').delete().in('id',ids).eq('user_id',(await c.auth.getUser()).data.user.id);if(r.error)throw r.error;return r.data;},
  async subscribeProducts(onChange){const c=await getClient();const channel=c.channel('promotor-pa-products').on('postgres_changes',{event:'*',schema:'public',table:'promotor_products'},payload=>{try{onChange?.(payload);}catch(e){console.warn(e);}});channel.subscribe();return channel;}

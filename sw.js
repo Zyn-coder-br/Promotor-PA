@@ -1,4 +1,4 @@
-const CACHE='promotor-pa-v05';
+const CACHE='promotor-pa-v09';
 const APP_SHELL=['./','./index.html','./styles.css','./app.js','./supabase-client.js','./manifest.webmanifest','./version.json'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(APP_SHELL)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
